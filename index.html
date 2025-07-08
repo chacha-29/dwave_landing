@@ -22,7 +22,7 @@
         <li><a href="#faq">FAQ</a></li>
       </ul>
       <div class="nav-buttons">
-        <a href="#service" class="btn-get-started">프로젝트 의뢰하기</a>
+        <button class="btn-get-started">프로젝트 의뢰하기</button>
         <!-- <a href="#footer" class="btn-sign-in">SIGN IN</a> -->
       </div>
       <div class="nav-toggle" id="navToggle">☰</div>
@@ -56,7 +56,7 @@
           <h1>Focus on your business<br />with ease through<br />task automation!</h1>
           <p>상담, 견적, 등록까지 반복적인 작업을 자동화로 시간과 비용을 절감하세요.</p>
         </div>
-        <a href="#service" class="btn-primary">상담 예약하기</a>
+        <button class="btn-primary">상담 예약하기</button>
       </div>
       <div class="hero-chat-bubble">
         <div class="chat-bubble">
@@ -142,10 +142,6 @@
           <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="반응형 웹사이트" />
           <h4>반응형 랜딩페이지</h4>
         </div>
-        <div class="portfolio-item">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="웹 포트폴리오 사이트" />
-          <h4>포트폴리오 웹사이트</h4>
-        </div>
       </div>
       <div class="portfolio-more">
         <button class="btn-portfolio-more">포트폴리오 더 보기</button>
@@ -172,6 +168,83 @@
         </div>
       </div>
   </section>
+
+  <!-- 프로젝트 의뢰하기 모달 -->
+  <div id="projectModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>프로젝트 의뢰하기</h2>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="projectForm">
+          <div class="form-group">
+            <label for="clientName">이름 *</label>
+            <input type="text" id="clientName" name="clientName" required>
+          </div>
+          <div class="form-group">
+            <label for="clientEmail">이메일 *</label>
+            <input type="email" id="clientEmail" name="clientEmail" required>
+          </div>
+          <div class="form-group">
+            <label for="clientPhone">연락처</label>
+            <input type="tel" id="clientPhone" name="clientPhone">
+          </div>
+          <div class="form-group">
+            <label for="projectType">프로젝트 유형 *</label>
+            <select id="projectType" name="projectType" required>
+              <option value="">선택해주세요</option>
+              <option value="branding">브랜딩</option>
+              <option value="uiux">UI/UX 디자인</option>
+              <option value="webdev">웹 개발</option>
+              <option value="automation">자동화 솔루션</option>
+              <option value="other">기타</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="budget">예산 범위</label>
+            <select id="budget" name="budget">
+              <option value="">선택해주세요</option>
+              <option value="under-500">50만원 미만</option>
+              <option value="500-1000">50만원 - 100만원</option>
+              <option value="1000-3000">100만원 - 300만원</option>
+              <option value="3000-5000">300만원 - 500만원</option>
+              <option value="over-5000">500만원 이상</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="projectDescription">프로젝트 설명 *</label>
+            <textarea id="projectDescription" name="projectDescription" rows="4" placeholder="프로젝트에 대한 상세한 설명을 적어주세요..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="timeline">희망 완료일</label>
+            <input type="date" id="timeline" name="timeline">
+          </div>
+          <div class="form-buttons">
+            <button type="button" class="btn-cancel" id="cancelBtn">취소</button>
+            <button type="submit" class="btn-submit" id="submitBtn">의뢰하기</button>
+          </div>
+        </form>
+        
+        <!-- 로딩 상태 -->
+        <div id="loadingState" style="display: none;">
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>의뢰 정보를 전송 중입니다...</p>
+          </div>
+        </div>
+        
+        <!-- 성공 상태 -->
+        <div id="successState" style="display: none;">
+          <div class="success-message">
+            <div class="success-icon">✓</div>
+            <h3>의뢰가 성공적으로 전송되었습니다!</h3>
+            <p>담당자가 24시간 내에 연락드리겠습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- 6. Footer -->
   <footer id="footer" class="footer-section">

@@ -152,4 +152,198 @@ function nextHeroSlide() {
 // 3초마다 자동 슬라이드 전환
 if (heroSlides.length > 0) {
   setInterval(nextHeroSlide, 3000);
-} 
+}
+
+// 모달창 기능
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('projectModal');
+  const closeBtn = document.querySelector('.close');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const projectForm = document.getElementById('projectForm');
+  const loadingState = document.getElementById('loadingState');
+  const successState = document.getElementById('successState');
+  
+  // 프로젝트 의뢰하기 버튼들
+  const getStartedBtn = document.querySelector('.btn-get-started');
+  const consultationBtn = document.querySelector('.btn-consultation');
+  const primaryBtn = document.querySelector('.btn-primary');
+  
+  // 모달 열기 함수
+  function openModal() {
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // 스크롤 방지
+    resetModalState();
+  }
+  
+  // 모달 닫기 함수
+  function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // 스크롤 복원
+    resetModalState();
+    projectForm.reset(); // 폼 초기화
+  }
+  
+  // 모달 상태 리셋
+  function resetModalState() {
+    projectForm.style.display = 'block';
+    loadingState.style.display = 'none';
+    successState.style.display = 'none';
+    submitBtn.disabled = false;
+  }
+  
+  // 로딩 상태 표시
+  function showLoading() {
+    projectForm.style.display = 'none';
+    loadingState.style.display = 'block';
+    successState.style.display = 'none';
+  }
+  
+  // 성공 상태 표시
+  function showSuccess() {
+    projectForm.style.display = 'none';
+    loadingState.style.display = 'none';
+    successState.style.display = 'block';
+    
+    // 3초 후 자동으로 모달 닫기
+    setTimeout(() => {
+      closeModal();
+    }, 3000);
+  }
+  
+  // 이벤트 리스너 추가
+  if (getStartedBtn) {
+    getStartedBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  }
+  
+  if (consultationBtn) {
+    consultationBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  }
+  
+  if (primaryBtn) {
+    primaryBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  }
+  
+  // 닫기 버튼 클릭
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
+  
+  // 취소 버튼 클릭
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', closeModal);
+  }
+  
+  // 모달 바깥 영역 클릭 시 닫기 (선택사항 - 원하면 주석 해제)
+  // modal.addEventListener('click', function(e) {
+  //   if (e.target === modal) {
+  //     closeModal();
+  //   }
+  // });
+  
+  // ESC 키로 모달 닫기 (선택사항 - 원하면 주석 해제)
+  // document.addEventListener('keydown', function(e) {
+  //   if (e.key === 'Escape' && modal.style.display === 'block') {
+  //     closeModal();
+  //   }
+  // });
+  
+  // 폼 제출 처리
+  if (projectForm) {
+    projectForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // 폼 데이터 수집
+      const formData = new FormData(projectForm);
+      const data = {};
+      
+      for (let [key, value] of formData.entries()) {
+        data[key] = value;
+      }
+      
+      // 유효성 검사
+      if (!data.clientName || !data.clientEmail || !data.projectType || !data.projectDescription) {
+        alert('필수 항목을 모두 입력해주세요.');
+        return;
+      }
+      
+      // 이메일 유효성 검사
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.clientEmail)) {
+        alert('올바른 이메일 형식을 입력해주세요.');
+        return;
+      }
+      
+      // 로딩 상태 표시
+      showLoading();
+      submitBtn.disabled = true;
+      
+      try {
+        // Make 웹훅으로 데이터 전송
+        await sendToMake(data);
+        showSuccess();
+      } catch (error) {
+        console.error('전송 오류:', error);
+        alert('전송에 실패했습니다. 다시 시도해주세요.');
+        resetModalState();
+      }
+    });
+  }
+  
+  // Make 웹훅으로 데이터 전송
+  async function sendToMake(data) {
+    const webhookURL = 'https://hook.us2.make.com/tbvdwpxv2itax3kgktqab17t3w2yehg7';
+    
+    const payload = {
+      client: {
+        name: data.clientName,
+        email: data.clientEmail,
+        phone: data.clientPhone || '',
+        submissionDate: new Date().toISOString()
+      },
+      project: {
+        type: data.projectType,
+        budget: data.budget || '',
+        timeline: data.timeline || '',
+        description: data.projectDescription
+      },
+      metadata: {
+        source: 'D-Wave Landing Page Modal',
+        timestamp: Date.now(),
+        requestId: generateRequestId()
+      }
+    };
+    
+    console.log('🚀 Make 웹훅으로 데이터 전송 중...', payload);
+    
+    const response = await fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    console.log('✅ Make 웹훅 전송 성공');
+  }
+  
+  // 요청 ID 생성
+  function generateRequestId() {
+    const timestamp = Date.now().toString(36);
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    return `REQ-${timestamp}-${randomStr}`.toUpperCase();
+  }
+}); 
