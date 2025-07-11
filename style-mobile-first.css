@@ -65,7 +65,7 @@ img {
 .nav-links li a {
   text-decoration: none;
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 1rem;
   letter-spacing: 1px;
   transition: color 1s ease;
   text-transform: uppercase;
@@ -86,10 +86,10 @@ img {
   background: transparent;
   color: #fff;
   border: 1px solid #fff;
-  padding: 0.3rem 1rem;
+  padding: 0.6rem 1.25rem;
   border-radius: 30px;
   text-decoration: none;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   transition: all 0.3s ease;
@@ -129,7 +129,9 @@ img {
 
 .navbar.scrolled .btn-get-started {
   color: #000;
-  border: 1px solid #000;
+  /* border: 2px solid #000; */
+  background:#222;
+  color:#eee;
 }
 
 .navbar.scrolled .btn-get-started:hover {
@@ -639,38 +641,63 @@ section h2 {
 }
 
 .portfolio-slider-controls {
-  display: none; /* 모바일에서는 버튼 숨김 */
+  display: none; /* 모든 화면에서 버튼 숨김 */
   justify-content: center;
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
 
-/* Portfolio Dots - 모바일용 */
+/* Portfolio Dots - 전체 화면용 */
 .portfolio-dots {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  gap: 0.8rem;
+  margin-top: 2rem;
+  padding: 1rem 0;
 }
 
 .portfolio-dot {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  padding: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+  border: 2px solid transparent;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.4s ease;
+  opacity: 0;
 }
 
 .portfolio-dot.active {
-  background-color: #ff4081;
-  transform: scale(1.2);
+  background: linear-gradient(45deg, #ff4081, #e91e63);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.3);
+  box-shadow: 0 4px 12px rgba(255, 64, 129, 0.4);
+}
+
+.portfolio-dot.active::before {
+  opacity: 1;
+  background: #fff;
 }
 
 .portfolio-dot:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .portfolio-item img {
@@ -1162,6 +1189,16 @@ section h2 {
     width: 10px;
     height: 10px;
   }
+  
+  /* Portfolio dots 태블릿 스타일 */
+  .portfolio-dots {
+    margin-top: 2.5rem;
+  }
+  
+  .portfolio-dot {
+    width: 14px;
+    height: 14px;
+  }
 }
 
 /* 601px 이상: 태블릿 */
@@ -1232,13 +1269,13 @@ section h2 {
     transform: translateY(0);
   }
 
-  /* 태블릿에서는 버튼 표시, dot 숨김 */
+  /* 태블릿에서는 dot 표시, 버튼 숨김 */
   .portfolio-slider-controls {
-    display: flex;
+    display: none;
   }
 
   .portfolio-dots {
-    display: none;
+    display: flex;
   }
 
   .portfolio-more {
@@ -1346,13 +1383,13 @@ section h2 {
     transform: translateY(0);
   }
 
-  /* 태블릿에서는 버튼 표시, dot 숨김 */
+  /* 태블릿에서는 dot 표시, 버튼 숨김 */
   .portfolio-slider-controls {
-    display: flex;
+    display: none;
   }
 
   .portfolio-dots {
-    display: none;
+    display: flex;
   }
   
   .portfolio-item img {
@@ -1517,7 +1554,14 @@ section h2 {
   }
 
   .portfolio-dots {
-    display: none; /* 데스크톱에서는 dot도 숨김 */
+    display: flex; /* 데스크톱에서도 dot 표시 */
+    margin-top: 3rem;
+    gap: 1rem;
+  }
+  
+  .portfolio-dot {
+    width: 16px;
+    height: 16px;
   }
   
   .portfolio-more {
@@ -1628,6 +1672,17 @@ section h2 {
   
   .portfolio-item img {
     height: 600px;
+  }
+  
+  /* Portfolio dots 대형 데스크톱 스타일 */
+  .portfolio-dots {
+    margin-top: 4rem;
+    gap: 1.2rem;
+  }
+  
+  .portfolio-dot {
+    width: 18px;
+    height: 18px;
   }
   
   .faq-section {
