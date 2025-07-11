@@ -190,9 +190,12 @@ function animatePortfolio() {
   const scrollTop = window.pageYOffset;
   const windowHeight = window.innerHeight;
   
-  // 섹션이 화면에 보이기 시작할 때
-  if (scrollTop + windowHeight > sectionTop + 100) {
-    // 포트폴리오 섹션 라운드 제거 및 여백 제거
+  // 섹션이 화면에 보이는지 확인
+  const isVisible = scrollTop + windowHeight > sectionTop + 100 && 
+                   scrollTop < sectionTop + sectionHeight - 100;
+  
+  if (isVisible) {
+    // 섹션이 화면에 보일 때: 애니메이션 적용
     portfolioSection.classList.add('animate');
     
     // 포트폴리오 슬라이더 먼저 애니메이션
@@ -211,6 +214,14 @@ function animatePortfolio() {
     setTimeout(() => {
       portfolioMore.classList.add('animate');
     }, 800 + (portfolioItems.length * 200) + 300); // 모든 아이템 애니메이션 후 300ms 뒤
+  } else {
+    // 섹션이 화면에서 벗어날 때: 이전 스타일로 복원
+    portfolioSection.classList.remove('animate');
+    portfolioSlider.classList.remove('animate');
+    portfolioItems.forEach((item) => {
+      item.classList.remove('animate');
+    });
+    portfolioMore.classList.remove('animate');
   }
 }
 
