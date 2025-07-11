@@ -528,6 +528,15 @@ document.addEventListener('DOMContentLoaded', function() {
         timeline: data.timeline || '',
         description: data.projectDescription
       },
+      korean: {
+        이름: data.clientName,
+        이메일: data.clientEmail,
+        연락처: data.clientPhone || '',
+        프로젝트유형: data.projectType,
+        예산: data.budget || '',
+        희망완료일: data.timeline || '',
+        프로젝트설명: data.projectDescription
+      },
       metadata: {
         source: 'D-Wave Landing Page Modal',
         timestamp: Date.now(),

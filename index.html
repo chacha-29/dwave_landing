@@ -229,19 +229,19 @@
 
           <div class="form-group">
             <label for="clientName">이름 *</label>
-            <input type="text" id="clientName" name="이름" required>
+            <input type="text" id="clientName" name="clientName" required>
           </div>
           <div class="form-group">
             <label for="clientEmail">이메일 *</label>
-            <input type="email" id="clientEmail" name="이메일" required>
+            <input type="email" id="clientEmail" name="clientEmail" required>
           </div>
           <div class="form-group">
             <label for="clientPhone">연락처</label>
-            <input type="tel" id="clientPhone" name="연락처">
+            <input type="tel" id="clientPhone" name="clientPhone">
           </div>
           <div class="form-group">
             <label for="projectType">프로젝트 유형 *</label>
-            <select id="projectType" name="프로젝트 유형" required>
+            <select id="projectType" name="projectType" required>
               <option value="" disabled selected>선택해주세요</option>
               <option value="브랜딩">브랜딩</option>
               <option value="UI/UX 디자인">UI/UX 디자인</option>
@@ -252,7 +252,7 @@
           </div>
           <div class="form-group">
             <label for="budget">예산 범위</label>
-            <select id="budget" name="예산">
+            <select id="budget" name="budget">
               <option value="" disabled selected>선택해주세요</option>
               <option value="50만원 미만">50만원 미만</option>
               <option value="50만원 - 100만원">50만원 - 100만원</option>
@@ -263,11 +263,11 @@
           </div>
           <div class="form-group">
             <label for="projectDescription">프로젝트 설명 *</label>
-            <textarea id="projectDescription" name="프로젝트 설명" rows="4" placeholder="프로젝트에 대한 상세한 설명을 적어주세요..." required></textarea>
+            <textarea id="projectDescription" name="projectDescription" rows="4" placeholder="프로젝트에 대한 상세한 설명을 적어주세요..." required></textarea>
           </div>
           <div class="form-group">
             <label for="timeline">희망 완료일</label>
-            <input type="date" id="timeline" name="희망 완료일">
+            <input type="date" id="timeline" name="timeline">
           </div>
           <div class="form-buttons">
             <button type="reset" class="btn-cancel" id="cancelBtn">취소</button>
@@ -275,6 +275,13 @@
           </div>
         </form>
 
+        <!-- 로딩 상태 -->
+        <div id="loadingState" style="display: none;">
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>전송 중입니다...</p>
+          </div>
+        </div>
         
         <!-- 성공 상태 -->
         <div id="successState" style="display: none;">
