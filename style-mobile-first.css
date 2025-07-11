@@ -553,9 +553,18 @@ section h2 {
   padding: 6rem 0 6rem 0;
   background: #4E00FB5E;
   border-radius: 18px;
-  /* margin: 24px 1rem; */
-  transition: border-radius 0.8s ease, margin 0.8s ease, transform 0.8s ease;
+  margin: 24px 1rem;
+  transform: translateY(10vh);
+  opacity: 0.7;
+  transition: border-radius 0.8s ease, margin 0.8s ease, transform 0.8s ease, opacity 0.8s ease;
   position: relative;
+}
+
+.portfolio-section.animate {
+  border-radius: 0;
+  margin: 0;
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .portfolio-section::before {
@@ -612,9 +621,9 @@ section h2 {
   max-width: 25%;
   flex: 0 0 25%;
   text-align: center;
-  transition: box-shadow 0.2s, transform 0.6s ease;
-  opacity: 1;
-  transform: translateY(0);
+  transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
+  opacity: 0.3;
+  transform: translateY(50px);
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
@@ -1213,6 +1222,14 @@ section h2 {
     min-width: 50%; /* 2개씩 보이므로 각각 50% */
     max-width: 50%;
     flex: 0 0 50%;
+    opacity: 0.3;
+    transform: translateY(50px);
+    transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
+  }
+  
+  .portfolio-item.animate {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* 태블릿에서는 버튼 표시, dot 숨김 */
@@ -1319,6 +1336,14 @@ section h2 {
     min-width: 50%; /* 2개씩 보이므로 각각 50% */
     max-width: 50%;
     flex: 0 0 50%;
+    opacity: 0.3;
+    transform: translateY(50px);
+    transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
+  }
+  
+  .portfolio-item.animate {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* 태블릿에서는 버튼 표시, dot 숨김 */
@@ -1448,6 +1473,15 @@ section h2 {
     margin: 2rem;
     border-radius: 1rem;
     overflow:hidden;
+    transform: translateY(10vh);
+    opacity: 0.7;
+  }
+  
+  .portfolio-section.animate {
+    border-radius: 0;
+    margin: 0;
+    transform: translateY(0);
+    opacity: 1;
   }
   
   .portfolio-section::before {
@@ -1464,6 +1498,14 @@ section h2 {
     min-width: 50%; /* 4개 모두 보이므로 각각 25% */
     max-width: 50%;
     flex: 0 0 25%;
+    opacity: 0.3;
+    transform: translateY(50px);
+    transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
+  }
+  
+  .portfolio-item.animate {
+    opacity: 1;
+    transform: translateY(0);
   }
   
   .portfolio-item img {
@@ -1562,6 +1604,26 @@ section h2 {
   
   .portfolio-section {
     padding: 11rem 0;
+    transform: translateY(10vh);
+    opacity: 0.7;
+  }
+  
+  .portfolio-section.animate {
+    border-radius: 0;
+    margin: 0;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .portfolio-item {
+    opacity: 0.3;
+    transform: translateY(50px);
+    transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
+  }
+  
+  .portfolio-item.animate {
+    opacity: 1;
+    transform: translateY(0);
   }
   
   .portfolio-item img {
