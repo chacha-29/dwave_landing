@@ -127,7 +127,7 @@ function initializeServiceSlider() {
   function startAutoSlide() {
     autoSlideInterval = setInterval(() => {
       nextSlide();
-    }, 5000); // 5초마다 자동 슬라이드
+    }, 3000); // 3초마다 자동 슬라이드
   }
 
   // 자동 슬라이드 정지
@@ -175,7 +175,7 @@ function initializeServiceSlider() {
   // 자동 슬라이드 시작
   startAutoSlide();
   
-  console.log(`Service slider initialized with ${totalSlides} slides - Auto slide every 5 seconds`);
+  console.log(`Service slider initialized with ${totalSlides} slides - Auto slide every 3 seconds`);
 }
 
 // 포트폴리오 섹션 스크롤 애니메이션
