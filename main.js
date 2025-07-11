@@ -364,6 +364,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // 포트폴리오 슬라이더 초기화
   initializePortfolioSlider();
   
+  // Back to Top 버튼 초기화
+  initializeBackToTop();
+  
   // 모달창 기능
   const modal = document.getElementById('projectModal');
   const closeBtn = document.querySelector('.close');
@@ -755,4 +758,42 @@ function initializePortfolioSlider() {
   // 초기 설정
   updatePortfolioSlider();
   console.log(`Portfolio slider initialized with ${totalSlides} items`);
+}
+
+// Back to Top 버튼 기능
+function initializeBackToTop() {
+  const backToTopBtn = document.getElementById('backToTop');
+  
+  if (!backToTopBtn) {
+    console.error('Back to Top button not found');
+    return;
+  }
+  
+  // 스크롤 위치에 따라 버튼 표시/숨김
+  function toggleBackToTopBtn() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > 300) {
+      backToTopBtn.classList.add('show');
+    } else {
+      backToTopBtn.classList.remove('show');
+    }
+  }
+  
+  // 상단으로 스크롤하는 함수
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+  
+  // 이벤트 리스너 등록
+  window.addEventListener('scroll', toggleBackToTopBtn);
+  backToTopBtn.addEventListener('click', scrollToTop);
+  
+  // 초기 상태 설정
+  toggleBackToTopBtn();
+  
+  console.log('Back to Top button initialized');
 } 

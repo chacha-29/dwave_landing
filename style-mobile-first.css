@@ -1198,6 +1198,15 @@ section h2 {
     width: 14px;
     height: 14px;
   }
+  
+  /* Back to Top 버튼 - 태블릿 */
+  .back-to-top {
+    bottom: 24px;
+    right: 24px;
+    width: 55px;
+    height: 55px;
+    font-size: 1.6rem;
+  }
 }
 
 /* 601px 이상: 태블릿 */
@@ -1398,6 +1407,15 @@ section h2 {
   .portfolio-section::before {
     background-size: 75px 75px;
   }
+  
+  /* Back to Top 버튼 - 태블릿 (769px+) */
+  .back-to-top {
+    bottom: 30px;
+    right: 30px;
+    width: 58px;
+    height: 58px;
+    font-size: 1.7rem;
+  }
 }
 
 /* 901px 이상: 데스크톱 */
@@ -1593,6 +1611,15 @@ section h2 {
     margin: 2rem 2rem 0 2rem;
     border-radius: 24px 24px 0 0;;
   }
+  
+  /* Back to Top 버튼 - 데스크톱 (901px+) */
+  .back-to-top {
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+  }
 }
 
 /* 1101px 이상: 대형 데스크톱 */
@@ -1691,4 +1718,54 @@ section h2 {
   .footer-section {
     padding: 4rem 0;
   }
+  
+  /* Back to Top 버튼 - 대형 데스크톱 (1101px+) */
+  .back-to-top {
+    bottom: 50px;
+    right: 50px;
+    width: 65px;
+    height: 65px;
+    font-size: 2rem;
+  }
+}
+
+/* Back to Top 버튼 - 모바일 */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: #4E00FB;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(78, 0, 251, 0.3);
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: #3a00d1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(78, 0, 251, 0.4);
+}
+
+.back-to-top span {
+  font-weight: bold;
+  line-height: 1;
 } 
