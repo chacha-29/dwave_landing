@@ -217,29 +217,96 @@ function animatePortfolio() {
 // 스크롤 이벤트 리스너 추가
 window.addEventListener('scroll', animatePortfolio);
 
-// Hero 배경 슬라이드
+// Hero 슬라이더
+const heroSlidesContainer = document.querySelector('.hero-slides-container');
 const heroSlides = document.querySelectorAll('.hero-slide');
-const heroTextSlides = document.querySelectorAll('.hero-text-slide');
+const heroDots = document.querySelectorAll('.hero-dot');
+const heroPrevBtn = document.getElementById('heroPrevBtn');
+const heroNextBtn = document.getElementById('heroNextBtn');
 let currentHeroSlide = 0;
+let heroAutoSlideInterval;
+
+function initializeHeroSlider() {
+  if (!heroSlidesContainer || heroSlides.length === 0) return;
+  
+  showHeroSlide(currentHeroSlide);
+  startHeroAutoSlide();
+  
+  // 버튼 이벤트 리스너
+  if (heroPrevBtn) {
+    heroPrevBtn.addEventListener('click', prevHeroSlide);
+  }
+  
+  if (heroNextBtn) {
+    heroNextBtn.addEventListener('click', nextHeroSlide);
+  }
+  
+  // Dot 이벤트 리스너
+  heroDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goToHeroSlide(index));
+  });
+  
+  // 호버 시 자동 슬라이드 중지/재시작
+  heroSlidesContainer.addEventListener('mouseenter', stopHeroAutoSlide);
+  heroSlidesContainer.addEventListener('mouseleave', startHeroAutoSlide);
+  
+  // 터치 이벤트 리스너
+  let heroTouchStartX = 0;
+  let heroTouchEndX = 0;
+  let isHeroTouching = false;
+  
+  heroSlidesContainer.addEventListener('touchstart', function(e) {
+    heroTouchStartX = e.changedTouches[0].screenX;
+    isHeroTouching = true;
+    stopHeroAutoSlide();
+  }, { passive: true });
+  
+  heroSlidesContainer.addEventListener('touchmove', function(e) {
+    if (!isHeroTouching) return;
+    e.preventDefault(); // 스크롤 방지
+  }, { passive: false });
+  
+  heroSlidesContainer.addEventListener('touchend', function(e) {
+    if (!isHeroTouching) return;
+    
+    heroTouchEndX = e.changedTouches[0].screenX;
+    isHeroTouching = false;
+    
+    const swipeDistance = heroTouchStartX - heroTouchEndX;
+    const minSwipeDistance = 50; // 최소 스와이프 거리
+    
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        // 왼쪽으로 스와이프 (다음 슬라이드)
+        nextHeroSlide();
+      } else {
+        // 오른쪽으로 스와이프 (이전 슬라이드)
+        prevHeroSlide();
+      }
+    }
+    
+    restartHeroAutoSlide();
+  }, { passive: true });
+}
 
 function showHeroSlide(index) {
-  // 배경 이미지 슬라이드
-  heroSlides.forEach((slide, i) => {
+  if (!heroSlidesContainer) return;
+  
+  const slideWidth = 33.333; // 각 슬라이드가 33.333% width (3개 슬라이드이므로)
+  const offset = -(index * slideWidth);
+  
+  heroSlidesContainer.style.transform = `translateX(${offset}%)`;
+  
+  // Dot 활성화 상태 업데이트
+  heroDots.forEach((dot, i) => {
     if (i === index) {
-      slide.classList.add('active');
+      dot.classList.add('active');
     } else {
-      slide.classList.remove('active');
+      dot.classList.remove('active');
     }
   });
   
-  // 텍스트 슬라이드
-  heroTextSlides.forEach((slide, i) => {
-    if (i === index) {
-      slide.classList.add('active');
-    } else {
-      slide.classList.remove('active');
-    }
-  });
+  currentHeroSlide = index;
 }
 
 function nextHeroSlide() {
@@ -247,13 +314,39 @@ function nextHeroSlide() {
   showHeroSlide(currentHeroSlide);
 }
 
-// 3초마다 자동 슬라이드 전환
-if (heroSlides.length > 0) {
-  setInterval(nextHeroSlide, 3000);
+function prevHeroSlide() {
+  currentHeroSlide = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
+  showHeroSlide(currentHeroSlide);
+}
+
+function goToHeroSlide(index) {
+  currentHeroSlide = index;
+  showHeroSlide(currentHeroSlide);
+  restartHeroAutoSlide();
+}
+
+function startHeroAutoSlide() {
+  if (heroAutoSlideInterval) clearInterval(heroAutoSlideInterval);
+  heroAutoSlideInterval = setInterval(nextHeroSlide, 5000); // 5초마다 자동 슬라이드
+}
+
+function stopHeroAutoSlide() {
+  if (heroAutoSlideInterval) {
+    clearInterval(heroAutoSlideInterval);
+    heroAutoSlideInterval = null;
+  }
+}
+
+function restartHeroAutoSlide() {
+  stopHeroAutoSlide();
+  setTimeout(startHeroAutoSlide, 1000); // 1초 후 자동 슬라이드 재시작
 }
 
 // DOM 로드 후 초기화
 document.addEventListener('DOMContentLoaded', function() {
+  // Hero 슬라이더 초기화
+  initializeHeroSlider();
+  
   // 서비스 슬라이더 초기화
   initializeServiceSlider();
   

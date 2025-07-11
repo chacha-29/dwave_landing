@@ -31,43 +31,92 @@
 
   <!-- 2. Hero -->
   <section id="hero" class="hero-section">
-    <div class="hero-background">
-      <div class="hero-slide active">
-        <img src="images/img_01.jpg" alt="Hero Background 1" />
-      </div>
-      <div class="hero-slide">
-        <img src="images/img_02.jpg" alt="Hero Background 2" />
-      </div>
-      <div class="hero-slide">
-        <img src="images/img_03.jpg" alt="Hero Background 3" />
-      </div>
-    </div>
-    <div class="container hero-content">
-      <div class="hero-text">
-        <div class="hero-text-slide active">
-          <h1>Creative Design<br />for Your Brand<br />Identity!</h1>
-          <p>브랜딩부터 UI/UX 디자인까지, 당신의 비즈니스를 돋보이게 만드는 창의적인 솔루션을 제공합니다.</p>
+    <div class="hero-slider">
+      <div class="hero-slides-container">
+        <!-- 첫 번째 슬라이드 -->
+        <div class="hero-slide active">
+          <div class="hero-background">
+            <img src="images/img_01.jpg" alt="Hero Background 1" />
+          </div>
+          <div class="container hero-content">
+            <div class="hero-text">
+              <h1>Creative Design<br />for Your Brand<br />Identity!</h1>
+              <p>브랜딩부터 UI/UX 디자인까지, 당신의 비즈니스를 돋보이게 만드는 창의적인 솔루션을 제공합니다.</p>
+              <button class="btn-primary">상담 예약하기</button>
+            </div>
+            <div class="hero-chat-bubble">
+              <div class="chat-bubble">
+                <span class="emoji">👋</span>
+                <div class="chat-content">
+                  <p>Hey 👋 Here's that ebook<br />you requested!</p>
+                  <button class="chat-button">Grab Your Guide</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="hero-text-slide">
-          <h1>Modern Web<br />Development<br />Solutions!</h1>
-          <p>최신 기술로 구현하는 반응형 웹사이트, 사용자 경험을 극대화하는 웹 개발 서비스를 제공합니다.</p>
+        
+        <!-- 두 번째 슬라이드 -->
+        <div class="hero-slide">
+          <div class="hero-background">
+            <img src="images/img_02.jpg" alt="Hero Background 2" />
+          </div>
+          <div class="container hero-content">
+            <div class="hero-text">
+              <h1>Modern Web<br />Development<br />Solutions!</h1>
+              <p>최신 기술로 구현하는 반응형 웹사이트, 사용자 경험을 극대화하는 웹 개발 서비스를 제공합니다.</p>
+              <button class="btn-primary">상담 예약하기</button>
+            </div>
+            <div class="hero-chat-bubble">
+              <div class="chat-bubble">
+                <span class="emoji">💻</span>
+                <div class="chat-content">
+                  <p>Ready to build your<br />dream website?</p>
+                  <button class="chat-button">Start Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="hero-text-slide">
-          <h1>Focus on your business<br />with ease through<br />task automation!</h1>
-          <p>상담, 견적, 등록까지 반복적인 작업을 자동화로 시간과 비용을 절감하세요.</p>
-        </div>
-        <button class="btn-primary">상담 예약하기</button>
-      </div>
-      <div class="hero-chat-bubble">
-        <div class="chat-bubble">
-          <span class="emoji">👋</span>
-          <div class="chat-content">
-            <p>Hey 👋 Here's that ebook<br />you requested!</p>
-            <button class="chat-button">Grab Your Guide</button>
+        
+        <!-- 세 번째 슬라이드 -->
+        <div class="hero-slide">
+          <div class="hero-background">
+            <img src="images/img_03.jpg" alt="Hero Background 3" />
+          </div>
+          <div class="container hero-content">
+            <div class="hero-text">
+              <h1>Focus on your business<br />with ease through<br />task automation!</h1>
+              <p>상담, 견적, 등록까지 반복적인 작업을 자동화로 시간과 비용을 절감하세요.</p>
+              <button class="btn-primary">상담 예약하기</button>
+            </div>
+            <div class="hero-chat-bubble">
+              <div class="chat-bubble">
+                <span class="emoji">🚀</span>
+                <div class="chat-content">
+                  <p>Automate your workflow<br />and save time!</p>
+                  <button class="chat-button">Learn More</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      
+      <!-- 슬라이더 컨트롤 -->
+      <div class="hero-slider-controls">
+        <button class="hero-slider-btn hero-prev-btn" id="heroPrevBtn">‹</button>
+        <button class="hero-slider-btn hero-next-btn" id="heroNextBtn">›</button>
+      </div>
+      
+      <!-- 슬라이더 인디케이터 -->
+      <div class="hero-dots">
+        <span class="hero-dot active" data-slide="0"></span>
+        <span class="hero-dot" data-slide="1"></span>
+        <span class="hero-dot" data-slide="2"></span>
+      </div>
     </div>
+    
     <div class="scroll-down-indicator">
       <div class="scroll-arrow">
         <span>↓</span>
