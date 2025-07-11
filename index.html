@@ -222,62 +222,59 @@
         <span class="close">&times;</span>
       </div>
       <div class="modal-body">
-        <form id="projectForm">
+        <form action="https://formsubmit.co/dwavecore@gmail.com" method="POST" id="projectForm">
+          <input type="hidden" name="_subject" value="D-Wave 프로젝트 의뢰 도착">
+          <input type="hidden" name="_next" value="https://yourdomain.com/thanks.html">
+          <input type="hidden" name="_captcha" value="false">
+
           <div class="form-group">
             <label for="clientName">이름 *</label>
-            <input type="text" id="clientName" name="clientName" required>
+            <input type="text" id="clientName" name="이름" required>
           </div>
           <div class="form-group">
             <label for="clientEmail">이메일 *</label>
-            <input type="email" id="clientEmail" name="clientEmail" required>
+            <input type="email" id="clientEmail" name="이메일" required>
           </div>
           <div class="form-group">
             <label for="clientPhone">연락처</label>
-            <input type="tel" id="clientPhone" name="clientPhone">
+            <input type="tel" id="clientPhone" name="연락처">
           </div>
           <div class="form-group">
             <label for="projectType">프로젝트 유형 *</label>
-            <select id="projectType" name="projectType" required>
-              <option value="">선택해주세요</option>
-              <option value="branding">브랜딩</option>
-              <option value="uiux">UI/UX 디자인</option>
-              <option value="webdev">웹 개발</option>
-              <option value="automation">자동화 솔루션</option>
-              <option value="other">기타</option>
+            <select id="projectType" name="프로젝트 유형" required>
+              <option value="" disabled selected>선택해주세요</option>
+              <option value="브랜딩">브랜딩</option>
+              <option value="UI/UX 디자인">UI/UX 디자인</option>
+              <option value="웹 개발">웹 개발</option>
+              <option value="자동화 솔루션">자동화 솔루션</option>
+              <option value="기타">기타</option>
             </select>
           </div>
           <div class="form-group">
             <label for="budget">예산 범위</label>
-            <select id="budget" name="budget">
-              <option value="">선택해주세요</option>
-              <option value="under-500">50만원 미만</option>
-              <option value="500-1000">50만원 - 100만원</option>
-              <option value="1000-3000">100만원 - 300만원</option>
-              <option value="3000-5000">300만원 - 500만원</option>
-              <option value="over-5000">500만원 이상</option>
+            <select id="budget" name="예산">
+              <option value="" disabled selected>선택해주세요</option>
+              <option value="50만원 미만">50만원 미만</option>
+              <option value="50만원 - 100만원">50만원 - 100만원</option>
+              <option value="100만원 - 300만원">100만원 - 300만원</option>
+              <option value="300만원 - 500만원">300만원 - 500만원</option>
+              <option value="500만원 이상">500만원 이상</option>
             </select>
           </div>
           <div class="form-group">
             <label for="projectDescription">프로젝트 설명 *</label>
-            <textarea id="projectDescription" name="projectDescription" rows="4" placeholder="프로젝트에 대한 상세한 설명을 적어주세요..." required></textarea>
+            <textarea id="projectDescription" name="프로젝트 설명" rows="4" placeholder="프로젝트에 대한 상세한 설명을 적어주세요..." required></textarea>
           </div>
           <div class="form-group">
             <label for="timeline">희망 완료일</label>
-            <input type="date" id="timeline" name="timeline">
+            <input type="date" id="timeline" name="희망 완료일">
           </div>
           <div class="form-buttons">
-            <button type="button" class="btn-cancel" id="cancelBtn">취소</button>
+            <button type="reset" class="btn-cancel" id="cancelBtn">취소</button>
             <button type="submit" class="btn-submit" id="submitBtn">의뢰하기</button>
           </div>
         </form>
-        
-        <!-- 로딩 상태 -->
-        <div id="loadingState" style="display: none;">
-          <div class="loading-spinner">
-            <div class="spinner"></div>
-            <p>의뢰 정보를 전송 중입니다...</p>
-          </div>
-        </div>
+
         
         <!-- 성공 상태 -->
         <div id="successState" style="display: none;">
