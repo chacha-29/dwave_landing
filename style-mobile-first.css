@@ -562,6 +562,10 @@ section h2 {
   position: relative;
 }
 
+.portfolio-section .container {
+  position: relative;
+}
+
 .portfolio-section.animate {
   border-radius: 0;
   margin: 0;
@@ -587,7 +591,7 @@ section h2 {
 /* Portfolio Slider - Mobile (1개씩 보이기) */
 .portfolio-slider {
   position: relative;
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -642,9 +646,12 @@ section h2 {
 
 .portfolio-slider-controls {
   display: flex; /* 모든 화면에서 버튼 표시 */
-  justify-content: center;
+  width:100%;
+  position: absolute;
+  right: 0;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  z-index: 10;
+  justify-content: flex-end;
 }
 
 /* Portfolio Dots - 전체 화면용 */
@@ -654,6 +661,7 @@ section h2 {
   gap: 0.8rem;
   margin-top: 2rem;
   padding: 1rem 0;
+  width: 100%;
 }
 
 .portfolio-dot {
@@ -1192,6 +1200,7 @@ section h2 {
   /* Portfolio dots 태블릿 스타일 */
   .portfolio-dots {
     margin-top: 2.5rem;
+    width: 100%;
   }
   
   .portfolio-dot {
@@ -1280,10 +1289,13 @@ section h2 {
   /* 태블릿에서는 dot과 버튼 모두 표시 */
   .portfolio-slider-controls {
     display: flex;
+    top: 5rem; /* 태블릿에서는 제목이 더 커서 조정 */
+    width: 100%;
   }
 
   .portfolio-dots {
     display: flex;
+    width: 100%;
   }
 
   .portfolio-more {
@@ -1394,10 +1406,13 @@ section h2 {
   /* 태블릿에서는 dot과 버튼 모두 표시 */
   .portfolio-slider-controls {
     display: flex;
+    top: 5rem; /* 태블릿에서는 제목이 더 커서 조정 */
+    width: 100%;
   }
 
   .portfolio-dots {
     display: flex;
+    width: 100%;
   }
   
   .portfolio-item img {
@@ -1568,12 +1583,15 @@ section h2 {
 
   .portfolio-slider-controls {
     display: flex; /* 데스크톱에서도 슬라이더 컨트롤 표시 */
+    top: 6rem; /* 데스크톱에서는 제목이 더 큰 사이즈로 조정 */
+    width: 100%;
   }
 
   .portfolio-dots {
     display: flex; /* 데스크톱에서도 dot 표시 */
     margin-top: 3rem;
     gap: 1rem;
+    width: 100%;
   }
   
   .portfolio-dot {
@@ -1688,7 +1706,7 @@ section h2 {
   
   /* Portfolio - 대형 데스크톱 (2개씩 보이기, 슬라이더 활성화) */
   .portfolio-container {
-    width: 200%; /* 2개씩 보이므로 200% */
+    width: 100%; /* 2개씩 보이므로 200% */
     overflow: hidden; /* 슬라이더 활성화 */
   }
 
@@ -1712,6 +1730,8 @@ section h2 {
 
   .portfolio-slider-controls {
     display: flex; /* 대형 데스크톱에서도 슬라이더 컨트롤 표시 */
+    top: -7rem; /* 대형 데스크톱에서는 제목이 가장 큰 사이즈로 조정 */
+    width: 100%;
   }
   
   /* Portfolio dots 대형 데스크톱 스타일 */
@@ -1719,6 +1739,7 @@ section h2 {
     display: flex;
     margin-top: 4rem;
     gap: 1.2rem;
+    width: 100%;
   }
   
   .portfolio-dot {
