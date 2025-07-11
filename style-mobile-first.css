@@ -587,7 +587,7 @@ section h2 {
 /* Portfolio Slider - Mobile (1개씩 보이기) */
 .portfolio-slider {
   position: relative;
-  width: 100%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -641,7 +641,7 @@ section h2 {
 }
 
 .portfolio-slider-controls {
-  display: none; /* 모든 화면에서 버튼 숨김 */
+  display: flex; /* 모든 화면에서 버튼 표시 */
   justify-content: center;
   gap: 0.5rem;
   margin-top: 0.5rem;
@@ -1277,9 +1277,9 @@ section h2 {
     transform: translateY(0);
   }
 
-  /* 태블릿에서는 dot 표시, 버튼 숨김 */
+  /* 태블릿에서는 dot과 버튼 모두 표시 */
   .portfolio-slider-controls {
-    display: none;
+    display: flex;
   }
 
   .portfolio-dots {
@@ -1391,9 +1391,9 @@ section h2 {
     transform: translateY(0);
   }
 
-  /* 태블릿에서는 dot 표시, 버튼 숨김 */
+  /* 태블릿에서는 dot과 버튼 모두 표시 */
   .portfolio-slider-controls {
-    display: none;
+    display: flex;
   }
 
   .portfolio-dots {
@@ -1542,16 +1542,16 @@ section h2 {
     background-size: 100px 100px;
   }
   
-  /* Portfolio - 데스크톱 (4개 모두 보이기, 슬라이더 비활성화) */
+  /* Portfolio - 데스크톱 (2개씩 보이기, 슬라이더 활성화) */
   .portfolio-container {
-    width: 100%; /* 4개 모두 보이므로 100% */
-    overflow: visible; /* 슬라이더 비활성화 */
+    width: 200%; /* 2개씩 보이므로 200% */
+    overflow: hidden; /* 슬라이더 활성화 */
   }
 
   .portfolio-item {
-    min-width: 50%; /* 4개 모두 보이므로 각각 25% */
+    min-width: 50%; /* 2개씩 보이므로 각각 50% */
     max-width: 50%;
-    flex: 0 0 25%;
+    flex: 0 0 50%;
     opacity: 0.3;
     transform: translateY(50px);
     transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
@@ -1567,7 +1567,7 @@ section h2 {
   }
 
   .portfolio-slider-controls {
-    display: none; /* 데스크톱에서는 슬라이더 컨트롤 숨김 */
+    display: flex; /* 데스크톱에서도 슬라이더 컨트롤 표시 */
   }
 
   .portfolio-dots {
@@ -1686,7 +1686,16 @@ section h2 {
     opacity: 1;
   }
   
+  /* Portfolio - 대형 데스크톱 (2개씩 보이기, 슬라이더 활성화) */
+  .portfolio-container {
+    width: 200%; /* 2개씩 보이므로 200% */
+    overflow: hidden; /* 슬라이더 활성화 */
+  }
+
   .portfolio-item {
+    min-width: 50%; /* 2개씩 보이므로 각각 50% */
+    max-width: 50%;
+    flex: 0 0 50%;
     opacity: 0.3;
     transform: translateY(50px);
     transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
@@ -1700,9 +1709,14 @@ section h2 {
   .portfolio-item img {
     height: 600px;
   }
+
+  .portfolio-slider-controls {
+    display: flex; /* 대형 데스크톱에서도 슬라이더 컨트롤 표시 */
+  }
   
   /* Portfolio dots 대형 데스크톱 스타일 */
   .portfolio-dots {
+    display: flex;
     margin-top: 4rem;
     gap: 1.2rem;
   }

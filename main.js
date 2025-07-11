@@ -581,11 +581,11 @@ function initializePortfolioSlider() {
     const width = window.innerWidth;
     
     if (width >= 901) {
-      // 데스크톱: 4개 모두 보임, 슬라이더 비활성화
+      // 데스크톱: 2개씩 보임, 슬라이더 활성화
       return { 
-        itemsPerView: 4, 
-        slideStep: 0, 
-        isSliderActive: false 
+        itemsPerView: 2, 
+        slideStep: 100, // 100%씩 이동 (2개씩)
+        isSliderActive: true 
       };
     } else if (width >= 601) {
       // 태블릿: 2개씩 보임
@@ -607,15 +607,7 @@ function initializePortfolioSlider() {
   function updatePortfolioSlider() {
     const slideInfo = getSlideInfo();
     
-    if (!slideInfo.isSliderActive) {
-      // 데스크톱: 슬라이더 비활성화
-      portfolioContainer.style.transform = 'translateX(0%)';
-      if (portfolioPrevBtn) portfolioPrevBtn.style.display = 'none';
-      if (portfolioNextBtn) portfolioNextBtn.style.display = 'none';
-      return;
-    }
-
-    // 슬라이더 활성화 (모바일/태블릿)
+    // 모든 화면에서 슬라이더 활성화
     if (portfolioPrevBtn) portfolioPrevBtn.style.display = 'block';
     if (portfolioNextBtn) portfolioNextBtn.style.display = 'block';
     
@@ -627,7 +619,7 @@ function initializePortfolioSlider() {
     if (portfolioPrevBtn) portfolioPrevBtn.disabled = currentPortfolioSlide === 0;
     if (portfolioNextBtn) portfolioNextBtn.disabled = currentPortfolioSlide >= maxSlides - 1;
     
-    // Dot 활성 상태 업데이트 (모바일에서만)
+    // Dot 활성 상태 업데이트
     updatePortfolioDots();
     
     console.log(`Portfolio - Current slide: ${currentPortfolioSlide}, TranslateX: ${translateX}%, ItemsPerView: ${slideInfo.itemsPerView}`);
@@ -645,8 +637,6 @@ function initializePortfolioSlider() {
 
   function goToSlide(slideIndex) {
     const slideInfo = getSlideInfo();
-    if (!slideInfo.isSliderActive) return;
-    
     const maxSlides = Math.ceil(totalSlides / slideInfo.itemsPerView);
     if (slideIndex >= 0 && slideIndex < maxSlides) {
       currentPortfolioSlide = slideIndex;
@@ -656,8 +646,6 @@ function initializePortfolioSlider() {
 
   function nextPortfolioSlide() {
     const slideInfo = getSlideInfo();
-    if (!slideInfo.isSliderActive) return;
-    
     const maxSlides = Math.ceil(totalSlides / slideInfo.itemsPerView);
     if (currentPortfolioSlide < maxSlides - 1) {
       currentPortfolioSlide++;
@@ -666,9 +654,6 @@ function initializePortfolioSlider() {
   }
 
   function prevPortfolioSlide() {
-    const slideInfo = getSlideInfo();
-    if (!slideInfo.isSliderActive) return;
-    
     if (currentPortfolioSlide > 0) {
       currentPortfolioSlide--;
       updatePortfolioSlider();
@@ -684,9 +669,6 @@ function initializePortfolioSlider() {
 
   // 터치 스와이프 처리 함수
   function handleTouchStart(e) {
-    const slideInfo = getSlideInfo();
-    if (!slideInfo.isSliderActive) return; // 데스크톱에서는 터치 비활성화
-    
     isTouching = true;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
@@ -698,18 +680,12 @@ function initializePortfolioSlider() {
   function handleTouchMove(e) {
     if (!isTouching) return;
     
-    const slideInfo = getSlideInfo();
-    if (!slideInfo.isSliderActive) return;
-    
     // 스크롤 방지
     e.preventDefault();
   }
 
   function handleTouchEnd(e) {
     if (!isTouching) return;
-    
-    const slideInfo = getSlideInfo();
-    if (!slideInfo.isSliderActive) return;
     
     isTouching = false;
     touchEndX = e.changedTouches[0].clientX;
