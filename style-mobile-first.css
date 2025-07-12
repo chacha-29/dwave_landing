@@ -403,6 +403,15 @@ img {
   padding: 0 1rem;
   z-index: 20;
   pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Hero 영역 호버 시 슬라이더 컨트롤 표시 */
+.hero-section:hover .hero-slider-controls {
+  opacity: 1;
+  visibility: visible;
 }
 
 .hero-slider-btn {
