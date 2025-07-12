@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const loadingState = document.getElementById('loadingState');
   const successState = document.getElementById('successState');
   
-  // 프로젝트 의뢰하기 버튼들
+  // 무료 상담 신청 버튼들
   const getStartedBtn = document.querySelector('.btn-get-started');
   const consultationBtn = document.querySelector('.btn-consultation');
   const primaryBtn = document.querySelector('.btn-primary');
@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.style.overflow = 'hidden'; // 스크롤 방지
     resetModalState();
     
-    // 모달 열릴 때 의뢰하기 버튼 초기 상태 설정
+    // 모달 열릴 때 신청하기 버튼 초기 상태 설정
     setTimeout(() => {
       updateSubmitButton();
     }, 50);
@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
       privacyDetails.classList.remove('open');
     }
     
-    // 의뢰하기 버튼 비활성화
+    // 신청하기 버튼 비활성화
     updateSubmitButton();
   }
   
