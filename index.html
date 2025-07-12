@@ -222,10 +222,8 @@
         <span class="close">&times;</span>
       </div>
       <div class="modal-body">
-        <form action="https://formsubmit.co/dwavecore@gmail.com" method="POST" id="projectForm">
-          <input type="hidden" name="_subject" value="D-Wave 프로젝트 의뢰 도착">
-          <input type="hidden" name="_next" value="https://yourdomain.com/thanks.html">
-          <input type="hidden" name="_captcha" value="false">
+        <form name="project-contact" method="POST" data-netlify="true" id="projectForm">
+          <input type="hidden" name="form-name" value="project-contact">
 
           <div class="form-group">
             <label for="clientName">이름 *</label>

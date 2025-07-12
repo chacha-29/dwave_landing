@@ -566,8 +566,8 @@ document.addEventListener('DOMContentLoaded', function() {
       submitBtn.disabled = true;
       
       try {
-        // Make 웹훅으로 데이터 전송
-        await sendToMake(data);
+        // Netlify Forms로 데이터 전송
+        await submitToNetlify(projectForm);
         showSuccess();
       } catch (error) {
         console.error('전송 오류:', error);
@@ -577,62 +577,35 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Make 웹훅으로 데이터 전송
-  async function sendToMake(data) {
-    const webhookURL = 'https://hook.us2.make.com/tbvdwpxv2itax3kgktqab17t3w2yehg7';
+  // Netlify Forms로 데이터 전송
+  async function submitToNetlify(form) {
+    const formData = new FormData(form);
     
-    const payload = {
-      client: {
-        name: data.clientName,
-        email: data.clientEmail,
-        phone: data.clientPhone || '',
-        submissionDate: new Date().toISOString()
-      },
-      project: {
-        type: data.projectType,
-        budget: data.budget || '',
-        timeline: data.timeline || '',
-        description: data.projectDescription
-      },
-      korean: {
-        이름: data.clientName,
-        이메일: data.clientEmail,
-        연락처: data.clientPhone || '',
-        프로젝트유형: data.projectType,
-        예산: data.budget || '',
-        희망완료일: data.timeline || '',
-        프로젝트설명: data.projectDescription
-      },
-      metadata: {
-        source: 'D-Wave Landing Page Modal',
-        timestamp: Date.now(),
-        requestId: generateRequestId()
-      }
-    };
+    // 개인정보 동의 상태 추가
+    const privacyConsent = document.getElementById('privacyConsent');
+    formData.set('privacyConsent', privacyConsent.checked ? 'true' : 'false');
     
-    console.log('🚀 Make 웹훅으로 데이터 전송 중...', payload);
+    // 제출 시간 추가
+    formData.set('submissionTime', new Date().toLocaleString('ko-KR'));
     
-    const response = await fetch(webhookURL, {
+    console.log('🚀 Netlify Forms로 데이터 전송 중...');
+    
+    const response = await fetch('/', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify(payload)
+      body: new URLSearchParams(formData).toString()
     });
     
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     
-    console.log('✅ Make 웹훅 전송 성공');
+    console.log('✅ Netlify Forms 전송 성공');
   }
   
-  // 요청 ID 생성
-  function generateRequestId() {
-    const timestamp = Date.now().toString(36);
-    const randomStr = Math.random().toString(36).substring(2, 8);
-    return `REQ-${timestamp}-${randomStr}`.toUpperCase();
-  }
+
 });
 
 // 포트폴리오 슬라이더 - DOM 로드 후 초기화
