@@ -386,6 +386,11 @@ document.addEventListener('DOMContentLoaded', function() {
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden'; // 스크롤 방지
     resetModalState();
+    
+    // 모달 열릴 때 의뢰하기 버튼 초기 상태 설정
+    setTimeout(() => {
+      updateSubmitButton();
+    }, 50);
   }
   
   // 모달 닫기 함수
@@ -401,7 +406,21 @@ document.addEventListener('DOMContentLoaded', function() {
     projectForm.style.display = 'block';
     loadingState.style.display = 'none';
     successState.style.display = 'none';
-    submitBtn.disabled = false;
+    
+    // 개인정보보호 동의 체크박스 초기화
+    const privacyConsent = document.getElementById('privacyConsent');
+    if (privacyConsent) {
+      privacyConsent.checked = false;
+    }
+    
+    // 개인정보 드롭다운 닫기
+    const privacyDetails = document.getElementById('privacyDetails');
+    if (privacyDetails) {
+      privacyDetails.classList.remove('open');
+    }
+    
+    // 의뢰하기 버튼 비활성화
+    updateSubmitButton();
   }
   
   // 로딩 상태 표시
@@ -421,6 +440,34 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
       closeModal();
     }, 3000);
+  }
+  
+  // 의뢰하기 버튼 활성화/비활성화 업데이트
+  function updateSubmitButton() {
+    const privacyConsent = document.getElementById('privacyConsent');
+    if (privacyConsent && submitBtn) {
+      submitBtn.disabled = !privacyConsent.checked;
+    }
+  }
+  
+  // 개인정보 드롭다운 토글
+  function togglePrivacyDetails(e) {
+    e.preventDefault();
+    const privacyDetails = document.getElementById('privacyDetails');
+    const privacyToggle = document.getElementById('privacyToggle');
+    
+    if (privacyDetails) {
+      privacyDetails.classList.toggle('open');
+      
+      // 링크 텍스트 변경
+      if (privacyToggle) {
+        if (privacyDetails.classList.contains('open')) {
+          privacyToggle.textContent = '닫기';
+        } else {
+          privacyToggle.textContent = '자세히 보기';
+        }
+      }
+    }
   }
   
   // 이벤트 리스너 추가
@@ -455,6 +502,18 @@ document.addEventListener('DOMContentLoaded', function() {
     cancelBtn.addEventListener('click', closeModal);
   }
   
+  // 개인정보 자세히 보기 토글
+  const privacyToggle = document.getElementById('privacyToggle');
+  if (privacyToggle) {
+    privacyToggle.addEventListener('click', togglePrivacyDetails);
+  }
+  
+  // 개인정보 동의 체크박스 변경 이벤트
+  const privacyConsent = document.getElementById('privacyConsent');
+  if (privacyConsent) {
+    privacyConsent.addEventListener('change', updateSubmitButton);
+  }
+  
   // 모달 바깥 영역 클릭 시 닫기 (선택사항 - 원하면 주석 해제)
   // modal.addEventListener('click', function(e) {
   //   if (e.target === modal) {
@@ -485,6 +544,13 @@ document.addEventListener('DOMContentLoaded', function() {
       // 유효성 검사
       if (!data.clientName || !data.clientEmail || !data.projectType || !data.projectDescription) {
         alert('필수 항목을 모두 입력해주세요.');
+        return;
+      }
+      
+      // 개인정보보호 동의 체크박스 검사
+      const privacyConsent = document.getElementById('privacyConsent');
+      if (!privacyConsent.checked) {
+        alert('개인정보 수집 및 이용에 동의해주세요.');
         return;
       }
       

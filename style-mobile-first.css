@@ -353,7 +353,7 @@ img {
 .hero-chat-bubble {
   margin-bottom: 3vh;
   width: 100%;
-  display: flex;
+  display: none;
   justify-content: center;
 }
 
@@ -1069,6 +1069,155 @@ section h2 {
   line-height: 1.6;
 }
 
+/* Privacy Consent Checkbox */
+.form-group.privacy-consent {
+  margin-bottom: 24px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.checkbox-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #fff;
+  border: 2px solid #e1e5e9;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.checkbox-label:hover input ~ .checkmark {
+  border-color: #667eea;
+}
+
+.checkbox-label input:checked ~ .checkmark {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-label .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.consent-text {
+  font-size: 13px;
+  color: #555;
+  margin-left: 8px;
+  line-height: 1.4;
+}
+
+.privacy-link {
+  color: #667eea;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.privacy-link:hover {
+  color: #5a6fd8;
+}
+
+/* Privacy Details Dropdown */
+.privacy-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.privacy-details.open {
+  max-height: 600px;
+  padding: 20px;
+  border: 1px solid #e1e5e9;
+}
+
+.privacy-content h4 {
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #667eea;
+}
+
+.privacy-section {
+  margin-bottom: 16px;
+}
+
+.privacy-section:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-section h5 {
+  color: #444;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.privacy-section p {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.privacy-section p:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-section strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Submit button disabled state */
+.btn-submit:disabled {
+  background: #ccc !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+  opacity: 0.6;
+}
+
 .form-buttons {
   display: flex;
   gap: 12px;
@@ -1563,7 +1712,7 @@ max-height: 100vh;
   }
   
   .hero-content {
-    padding: 16rem 3rem 4rem 3rem;
+    padding: 16rem 6rem 10rem 6rem;
     gap: clamp(2rem, 5vh, 3.5rem);
     height: 100vh;
     min-height: 700px;
@@ -1765,7 +1914,7 @@ max-height: 100vh;
   }
   
   .hero-content {
-    padding: 15rem 4rem 8rem 4rem;
+    padding: 15rem 6rem 10rem 6rem;
     gap: clamp(2.5rem, 6vh, 4rem);
     height: 100vh;
     min-height: 750px;
@@ -1914,4 +2063,11 @@ max-height: 100vh;
 .back-to-top span {
   font-weight: bold;
   line-height: 1;
+} 
+
+/* 1440px 이상: hero-chat-bubble 표시 */
+@media (min-width: 1440px) {
+  .hero-chat-bubble {
+    display: flex;
+  }
 } 
