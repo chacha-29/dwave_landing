@@ -370,22 +370,32 @@ document.addEventListener('DOMContentLoaded', function() {
   // 모달창 기능
   const modal = document.getElementById('projectModal');
   const closeBtn = document.querySelector('.close');
+  const resetBtn = document.getElementById('resetBtn');
   const cancelBtn = document.getElementById('cancelBtn');
   const submitBtn = document.getElementById('submitBtn');
   const projectForm = document.getElementById('projectForm');
   const loadingState = document.getElementById('loadingState');
   const successState = document.getElementById('successState');
   
+  // 봇 방지용 변수들
+  let formOpenTime = 0; // 폼이 열린 시간
+  const MIN_FORM_TIME = 3000; // 최소 3초 후 제출 가능
+  
   // 무료 상담 신청 버튼들
   const getStartedBtn = document.querySelector('.btn-get-started');
   const consultationBtn = document.querySelector('.btn-consultation');
   const primaryBtn = document.querySelector('.btn-primary');
+  
+
   
   // 모달 열기 함수
   function openModal() {
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden'; // 스크롤 방지
     resetModalState();
+    
+    // 봇 방지용 - 폼이 열린 시간 기록
+    formOpenTime = Date.now();
     
     // 모달 열릴 때 신청하기 버튼 초기 상태 설정
     setTimeout(() => {
@@ -419,8 +429,50 @@ document.addEventListener('DOMContentLoaded', function() {
       privacyDetails.classList.remove('open');
     }
     
+    // 로봇 체크박스 초기화
+    const robotCheck = document.getElementById('robotCheck');
+    if (robotCheck) {
+      robotCheck.checked = false;
+    }
+    
     // 신청하기 버튼 비활성화
     updateSubmitButton();
+  }
+  
+  // 폼 초기화 함수
+  function resetForm() {
+    // 모든 입력 필드 초기화
+    const inputs = projectForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select, textarea');
+    inputs.forEach(input => {
+      if (input.type === 'select-one') {
+        input.selectedIndex = 0;
+      } else {
+        input.value = '';
+      }
+    });
+    
+    // 체크박스 초기화
+    const checkboxes = projectForm.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = false;
+    });
+    
+    // 개인정보 드롭다운 닫기
+    const privacyDetails = document.getElementById('privacyDetails');
+    if (privacyDetails) {
+      privacyDetails.classList.remove('open');
+      // 링크 텍스트도 초기화
+      const privacyToggle = document.getElementById('privacyToggle');
+      if (privacyToggle) {
+        privacyToggle.textContent = '자세히 보기';
+      }
+    }
+    
+    // 신청하기 버튼 비활성화
+    updateSubmitButton();
+    
+    // 사용자 피드백
+    alert('입력 내용이 모두 초기화되었습니다.');
   }
   
   // 로딩 상태 표시
@@ -497,6 +549,18 @@ document.addEventListener('DOMContentLoaded', function() {
     closeBtn.addEventListener('click', closeModal);
   }
   
+  // 초기화 버튼 클릭
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // 확인 대화상자
+      if (confirm('입력한 모든 내용이 삭제됩니다. 정말 초기화하시겠습니까?')) {
+        resetForm();
+      }
+    });
+  }
+  
   // 취소 버튼 클릭
   if (cancelBtn) {
     cancelBtn.addEventListener('click', closeModal);
@@ -513,6 +577,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (privacyConsent) {
     privacyConsent.addEventListener('change', updateSubmitButton);
   }
+  
+
   
   // 모달 바깥 영역 클릭 시 닫기 (선택사항 - 원하면 주석 해제)
   // modal.addEventListener('click', function(e) {
@@ -541,7 +607,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data[key] = value;
       }
       
-      // 유효성 검사
+      // 기본 유효성 검사
       if (!data.clientName || !data.clientEmail || !data.projectType || !data.projectDescription) {
         alert('필수 항목을 모두 입력해주세요.');
         return;
@@ -560,6 +626,34 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('올바른 이메일 형식을 입력해주세요.');
         return;
       }
+      
+      // 🛡️ 봇 방지 검증 시작
+      
+      // 1. Honeypot 필드 검사
+      const honeypotField = document.getElementById('website');
+      if (honeypotField && honeypotField.value.trim() !== '') {
+        console.log('🚨 봇 감지: Honeypot 필드가 채워짐');
+        alert('오류가 발생했습니다. 다시 시도해주세요.');
+        return;
+      }
+      
+      // 2. 시간 기반 검사 (최소 3초 후 제출 가능)
+      const currentTime = Date.now();
+      const elapsedTime = currentTime - formOpenTime;
+      if (elapsedTime < MIN_FORM_TIME) {
+        console.log('🚨 봇 감지: 제출 시간이 너무 빠름', elapsedTime + 'ms');
+        alert('잠시 후 다시 시도해주세요.');
+        return;
+      }
+      
+      // 3. 로봇 체크박스 검증
+      const robotCheck = document.getElementById('robotCheck');
+      if (!robotCheck || !robotCheck.checked) {
+        alert('로봇이 아님을 확인해주세요.');
+        return;
+      }
+      
+      console.log('✅ 봇 방지 검증 통과');
       
       // 로딩 상태 표시
       showLoading();

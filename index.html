@@ -224,6 +224,8 @@
       <div class="modal-body">
         <form name="project-contact" method="POST" data-netlify="true" id="projectForm">
           <input type="hidden" name="form-name" value="project-contact">
+          <!-- Honeypot 필드 - 봇 방지용 (사용자에게는 보이지 않음) -->
+          <input type="text" name="website" id="website" class="honeypot" tabindex="-1" autocomplete="off">
 
           <div class="form-group">
             <label for="clientName">이름 *</label>
@@ -266,6 +268,16 @@
             <label for="projectDescription">프로젝트 설명 *</label>
             <textarea id="projectDescription" name="projectDescription" rows="4" placeholder="프로젝트에 대한 상세한 설명을 적어주세요..." required></textarea>
           </div>
+          <div class="form-group">
+            <div class="robot-check">
+              <label class="robot-checkbox-label">
+                <input type="checkbox" id="robotCheck" name="robotCheck" required>
+                <span class="robot-checkmark"></span>
+                <span class="robot-text">로봇이 아닙니다</span>
+                <span class="robot-icon">🤖</span>
+              </label>
+            </div>
+          </div>
           <div class="form-group privacy-consent">
             <label class="checkbox-label">
               <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
@@ -305,6 +317,7 @@
             </div>
           </div>
           <div class="form-buttons">
+            <button type="button" class="btn-reset" id="resetBtn">초기화</button>
             <button type="reset" class="btn-cancel" id="cancelBtn">취소</button>
             <button type="submit" class="btn-submit" id="submitBtn">신청하기</button>
           </div>
