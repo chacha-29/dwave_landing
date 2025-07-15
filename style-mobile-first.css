@@ -437,33 +437,96 @@ img {
   transform: scale(1.1);
 }
 
-/* Hero dots */
-.hero-dots {
+/* Hero indicators */
+.hero-indicators {
   position: absolute;
   bottom: 6rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.8rem;
+  align-items: center;
+  gap: 1rem;
   z-index: 20;
 }
 
+.hero-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .hero-dot {
-  width: 12px;
-  height: 12px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .hero-dot.active {
   background: #fff;
-  transform: scale(1.2);
+  color: #4E00FB;
+  transform: scale(1.1);
+  border-color: #fff;
 }
 
 .hero-dot:hover {
   background: rgba(255, 255, 255, 0.7);
+  color: #4E00FB;
+  transform: scale(1.05);
+}
+
+.hero-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hero-play-btn,
+.hero-pause-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.hero-play-btn:hover,
+.hero-pause-btn:hover {
+  background: rgba(255, 255, 255, 0.7);
+  color: #4E00FB;
+  transform: scale(1.05);
+}
+
+.hero-play-btn.active,
+.hero-pause-btn.active {
+  background: #fff;
+  color: #4E00FB;
+  border-color: #fff;
+}
+
+/* 버튼 표시/숨김 상태 */
+.hero-play-btn.hidden,
+.hero-pause-btn.hidden {
+  display: none;
+}
+
+/* 초기 상태: 자동 재생 중이므로 정지 버튼만 표시 */
+.hero-play-btn {
+  display: none;
 }
 
 .scroll-down-indicator {
@@ -472,6 +535,7 @@ img {
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+  display: none; /* 모바일/태블릿에서는 숨김 */
 }
 
 .scroll-arrow {
@@ -1597,7 +1661,7 @@ section h2 {
     font-size: 1.3rem;
   }
   
-  .hero-dots {
+  .hero-indicators {
     bottom: 5.5rem;
   }
   
@@ -1772,13 +1836,26 @@ section h2 {
     font-size: 1.5rem;
   }
   
-  .hero-dots {
+  .hero-indicators {
     bottom: 6rem;
   }
   
+  /* 스크롤 다운 인디케이터 - 데스크톱에서만 표시 */
+  .scroll-down-indicator {
+    display: block;
+  }
+  
   .hero-dot {
-    width: 12px;
-    height: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+  
+  .hero-play-btn,
+  .hero-pause-btn {
+    width: 41px;
+    height: 41px;
+    font-size: 1rem;
   }
   
   .service-section {

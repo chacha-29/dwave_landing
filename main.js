@@ -238,14 +238,18 @@ const heroSlides = document.querySelectorAll('.hero-slide');
 const heroDots = document.querySelectorAll('.hero-dot');
 const heroPrevBtn = document.getElementById('heroPrevBtn');
 const heroNextBtn = document.getElementById('heroNextBtn');
+const heroPlayBtn = document.getElementById('heroPlayBtn');
+const heroPauseBtn = document.getElementById('heroPauseBtn');
 let currentHeroSlide = 0;
 let heroAutoSlideInterval;
+let isHeroPaused = false;
 
 function initializeHeroSlider() {
   if (!heroSlidesContainer || heroSlides.length === 0) return;
   
   showHeroSlide(currentHeroSlide);
   startHeroAutoSlide();
+  updateHeroButtonStates();
   
   // 버튼 이벤트 리스너
   if (heroPrevBtn) {
@@ -261,9 +265,22 @@ function initializeHeroSlider() {
     dot.addEventListener('click', () => goToHeroSlide(index));
   });
   
-  // 호버 시 자동 슬라이드 중지/재시작
-  heroSlidesContainer.addEventListener('mouseenter', stopHeroAutoSlide);
-  heroSlidesContainer.addEventListener('mouseleave', startHeroAutoSlide);
+  // 플레이/정지 버튼 이벤트 리스너
+  if (heroPlayBtn) {
+    heroPlayBtn.addEventListener('click', playHeroSlider);
+  }
+  
+  if (heroPauseBtn) {
+    heroPauseBtn.addEventListener('click', pauseHeroSlider);
+  }
+  
+  // 호버 시 자동 슬라이드 중지/재시작 (정지 상태가 아닐 때만)
+  heroSlidesContainer.addEventListener('mouseenter', () => {
+    if (!isHeroPaused) stopHeroAutoSlide();
+  });
+  heroSlidesContainer.addEventListener('mouseleave', () => {
+    if (!isHeroPaused) startHeroAutoSlide();
+  });
   
   // 터치 이벤트 리스너
   let heroTouchStartX = 0;
@@ -273,7 +290,7 @@ function initializeHeroSlider() {
   heroSlidesContainer.addEventListener('touchstart', function(e) {
     heroTouchStartX = e.changedTouches[0].screenX;
     isHeroTouching = true;
-    stopHeroAutoSlide();
+    if (!isHeroPaused) stopHeroAutoSlide();
   }, { passive: true });
   
   heroSlidesContainer.addEventListener('touchmove', function(e) {
@@ -300,7 +317,7 @@ function initializeHeroSlider() {
       }
     }
     
-    restartHeroAutoSlide();
+    if (!isHeroPaused) restartHeroAutoSlide();
   }, { passive: true });
 }
 
@@ -337,12 +354,14 @@ function prevHeroSlide() {
 function goToHeroSlide(index) {
   currentHeroSlide = index;
   showHeroSlide(currentHeroSlide);
-  restartHeroAutoSlide();
+  if (!isHeroPaused) restartHeroAutoSlide();
 }
 
 function startHeroAutoSlide() {
   if (heroAutoSlideInterval) clearInterval(heroAutoSlideInterval);
-  heroAutoSlideInterval = setInterval(nextHeroSlide, 5000); // 5초마다 자동 슬라이드
+  if (!isHeroPaused) {
+    heroAutoSlideInterval = setInterval(nextHeroSlide, 5000); // 5초마다 자동 슬라이드
+  }
 }
 
 function stopHeroAutoSlide() {
@@ -352,9 +371,43 @@ function stopHeroAutoSlide() {
   }
 }
 
-function restartHeroAutoSlide() {
+function playHeroSlider() {
+  if (!heroPlayBtn || !heroPauseBtn) return;
+  
+  isHeroPaused = false;
+  startHeroAutoSlide();
+  updateHeroButtonStates();
+}
+
+function pauseHeroSlider() {
+  if (!heroPlayBtn || !heroPauseBtn) return;
+  
+  isHeroPaused = true;
   stopHeroAutoSlide();
-  setTimeout(startHeroAutoSlide, 1000); // 1초 후 자동 슬라이드 재시작
+  updateHeroButtonStates();
+}
+
+function updateHeroButtonStates() {
+  if (!heroPlayBtn || !heroPauseBtn) return;
+  
+  if (isHeroPaused) {
+    heroPlayBtn.classList.remove('hidden');
+    heroPlayBtn.classList.add('active');
+    heroPauseBtn.classList.add('hidden');
+    heroPauseBtn.classList.remove('active');
+  } else {
+    heroPlayBtn.classList.add('hidden');
+    heroPlayBtn.classList.remove('active');
+    heroPauseBtn.classList.remove('hidden');
+    heroPauseBtn.classList.add('active');
+  }
+}
+
+function restartHeroAutoSlide() {
+  if (!isHeroPaused) {
+    stopHeroAutoSlide();
+    setTimeout(startHeroAutoSlide, 1000); // 1초 후 자동 슬라이드 재시작
+  }
 }
 
 // DOM 로드 후 초기화
