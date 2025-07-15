@@ -36,14 +36,14 @@ img {
   height: 100vh;
   min-height: 600px;
   max-height: 100vh;
-  padding: 12rem 2rem 3rem 2rem;
+  padding: 7rem 2rem 3rem 2rem;
   z-index: 10;
   position: relative;
   gap: 1rem;
 }
 
 .hero-text h1 {
-  font-size: 3.5rem;
+  font-size: 3rem;
   color: #fff;
   line-height: 130%;
   margin-bottom: 1rem;
@@ -93,7 +93,7 @@ img {
 .nav-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   height: 80px;
   width: 100%;
   padding: 0 1rem;
@@ -543,7 +543,7 @@ section h2 {
 }
 
 .service-section {
-  padding: 10rem 0 5rem 0;
+  padding: 5rem 0 5rem 0;
   background: #fff;
   margin: 20px 0;
   border-radius: 18px;
@@ -1933,6 +1933,7 @@ section h2 {
   /* Large 화면에서 더 큰 스타일 추가 */
   .nav-container {
     padding: 0 4rem;
+    justify-content: space-between;
   }
   
   .nav-links {
