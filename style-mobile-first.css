@@ -36,14 +36,14 @@ img {
   height: 100vh;
   min-height: 600px;
   max-height: 100vh;
-  padding: 12rem 1rem 3rem 1rem;
+  padding: 12rem 2rem 3rem 2rem;
   z-index: 10;
   position: relative;
   gap: 1rem;
 }
 
 .hero-text h1 {
-  font-size: 1.8rem;
+  font-size: 3.5rem;
   color: #fff;
   line-height: 130%;
   margin-bottom: 1rem;
@@ -51,7 +51,7 @@ img {
 }
 
 .hero-text p {
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -163,7 +163,7 @@ img {
   border-radius: 8px;
   /* background: rgba(0, 0, 0, 0.3); */
   /* backdrop-filter: blur(5px); */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); */
   /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); */
 }
 
@@ -230,10 +230,10 @@ img {
 }
 
 .navbar.scrolled .nav-toggle {
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* background: rgba(255, 255, 255, 0.3); */
+  /* backdrop-filter: blur(5px); */
+  /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .navbar.scrolled .btn-get-started {
@@ -581,7 +581,7 @@ section h2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 200px;
+  min-height: 300px;
   box-sizing: border-box;
 }
 
@@ -679,7 +679,7 @@ section h2 {
 /* Portfolio Slider - Mobile (1개씩 보이기) */
 .portfolio-slider {
   position: relative;
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -697,9 +697,9 @@ section h2 {
 
 .portfolio-container {
   display: flex;
-  overflow: hidden;
+  /* overflow: hidden; */
   gap: 0;
-  width: 400%; /* 4개 아이템 x 100% = 400% */
+  width: 400%; /* 4개 아이템 x 100% = 400% (모바일: 1개씩 보이기) */
   max-width: none;
   transition: transform 0.3s ease;
   /* 터치 스와이프 관련 스타일 */
@@ -711,13 +711,13 @@ section h2 {
 
 .portfolio-item {
   padding: 1rem;
-  min-width: 25%; /* 4개 아이템이므로 각각 25% */
+  min-width: 25%; /* 4개 아이템이므로 각각 25% (모바일: 1개씩 보이기) */
   max-width: 25%;
   flex: 0 0 25%;
   text-align: center;
   transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
-  opacity: 0.3;
-  transform: translateY(50px);
+  opacity: 1; /* 기본적으로 보이도록 수정 */
+  transform: translateY(0); /* 기본적으로 제자리에 있도록 수정 */
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
@@ -733,9 +733,9 @@ section h2 {
 }
 
 .portfolio-slider-controls {
-  display: flex; /* 모든 화면에서 버튼 표시 */
+  display: none; /* 모바일에서는 숨김 */
   width:100%;
-  position: absolute;
+  position: relative;
   right: 0;
   gap: 0.5rem;
   z-index: 10;
@@ -747,7 +747,6 @@ section h2 {
   display: flex;
   justify-content: center;
   gap: 0.8rem;
-  margin-top: 2rem;
   padding: 1rem 0;
   width: 100%;
 }
@@ -1521,7 +1520,7 @@ section h2 {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    flex: 0 0 100%;
+    /* flex: 0 0 100%; */
     min-height: 300px;
     padding: 2rem 1.5rem;
   }
@@ -1554,8 +1553,8 @@ section h2 {
     min-width: 50%; /* 2개씩 보이므로 각각 50% */
     max-width: 50%;
     flex: 0 0 50%;
-    opacity: 0.3;
-    transform: translateY(50px);
+    opacity: 1; /* 기본적으로 보이도록 수정 */
+    transform: translateY(0); /* 기본적으로 제자리에 있도록 수정 */
     transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
   }
   
@@ -1678,15 +1677,15 @@ section h2 {
   
   /* Portfolio - 태블릿 (2개씩 보이기 유지) */
   .portfolio-container {
-    width: 200%; /* 2개씩 보이므로 200% */
+    width: 200%; /* 4개 아이템, 2개씩 보이므로 200% */
   }
 
   .portfolio-item {
     min-width: 50%; /* 2개씩 보이므로 각각 50% */
     max-width: 50%;
     flex: 0 0 50%;
-    opacity: 0.3;
-    transform: translateY(50px);
+    opacity: 1; /* 기본적으로 보이도록 수정 */
+    transform: translateY(0); /* 기본적으로 제자리에 있도록 수정 */
     transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
   }
   
@@ -1850,18 +1849,18 @@ section h2 {
     background-size: 100px 100px;
   }
   
-  /* Portfolio - 데스크톱 (2개씩 보이기, 슬라이더 활성화) */
+  /* Portfolio - 데스크톱 (3개씩 보이기, 슬라이더 활성화) */
   .portfolio-container {
-    width: 200%; /* 2개씩 보이므로 200% */
+    width: 400%; /* 4개 아이템 전체 width 유지 */
     overflow: hidden; /* 슬라이더 활성화 */
   }
 
   .portfolio-item {
-    min-width: 50%; /* 2개씩 보이므로 각각 50% */
-    max-width: 50%;
-    flex: 0 0 50%;
-    opacity: 0.3;
-    transform: translateY(50px);
+    min-width: 33.33%; /* 3개씩 보이므로 각각 33.33% */
+    max-width: 33.33%;
+    flex: 0 0 33.33%;
+    opacity: 1; /* 기본적으로 보이도록 수정 */
+    transform: translateY(0); /* 기본적으로 제자리에 있도록 수정 */
     transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
   }
   
@@ -1882,7 +1881,6 @@ section h2 {
 
   .portfolio-dots {
     display: flex; /* 데스크톱에서도 dot 표시 */
-    margin-top: 3rem;
     gap: 1rem;
     width: 100%;
   }
@@ -1997,15 +1995,16 @@ section h2 {
   
   .portfolio-container {
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
+    margin:0 2rem;
   }
 
   .portfolio-item {
     min-width: 50%;
     max-width: 50%;
     flex: 0 0 50%;
-    opacity: 0.3;
-    transform: translateY(50px);
+    opacity: 1; /* 기본적으로 보이도록 수정 */
+    transform: translateY(0); /* 기본적으로 제자리에 있도록 수정 */
     transition: box-shadow 0.2s, transform 0.6s ease, opacity 0.6s ease;
   }
   
@@ -2020,13 +2019,12 @@ section h2 {
 
   .portfolio-slider-controls {
     display: flex;
-    top: -7rem;
+    top: 0;
     width: 100%;
   }
   
   .portfolio-dots {
     display: flex;
-    margin-top: 4rem;
     gap: 1.2rem;
     width: 100%;
   }

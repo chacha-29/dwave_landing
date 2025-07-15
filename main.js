@@ -210,10 +210,12 @@ function animatePortfolio() {
       }, 800 + (index * 200)); // 리스트 애니메이션 후 200ms 간격으로 순서대로 애니메이션
     });
     
-    // 포트폴리오 더 보기 버튼 애니메이션
-    setTimeout(() => {
-      portfolioMore.classList.add('animate');
-    }, 800 + (portfolioItems.length * 200) + 300); // 모든 아이템 애니메이션 후 300ms 뒤
+    // 포트폴리오 더 보기 버튼 애니메이션 (있는 경우에만)
+    if (portfolioMore) {
+      setTimeout(() => {
+        portfolioMore.classList.add('animate');
+      }, 800 + (portfolioItems.length * 200) + 300); // 모든 아이템 애니메이션 후 300ms 뒤
+    }
   } else {
     // 섹션이 화면에서 벗어날 때: 이전 스타일로 복원
     portfolioSection.classList.remove('animate');
@@ -221,7 +223,9 @@ function animatePortfolio() {
     portfolioItems.forEach((item) => {
       item.classList.remove('animate');
     });
-    portfolioMore.classList.remove('animate');
+    if (portfolioMore) {
+      portfolioMore.classList.remove('animate');
+    }
   }
 }
 
@@ -718,29 +722,29 @@ function initializePortfolioSlider() {
     return;
   }
 
-  // 화면 크기에 따른 슬라이드 계산
+  // 화면 크기에 따른 슬라이드 계산 - 모든 브레이크포인트에서 1개씩 이동
   function getSlideInfo() {
     const width = window.innerWidth;
     
-    if (width >= 901) {
-      // 데스크톱: 2개씩 보임, 슬라이더 활성화
+    if (width >= 1200) {
+      // 데스크톱 (1200px+): 3개씩 보임, 1개씩 이동
       return { 
-        itemsPerView: 2, 
-        slideStep: 100, // 100%씩 이동 (2개씩)
+        itemsPerView: 3, 
+        slideStep: 25, // 25%씩 이동 (1개 아이템씩)
         isSliderActive: true 
       };
-    } else if (width >= 601) {
-      // 태블릿: 2개씩 보임
+    } else if (width >= 840) {
+      // 태블릿 (840px-1200px): 2개씩 보임, 1개씩 이동
       return { 
         itemsPerView: 2, 
-        slideStep: 100, // 100%씩 이동 (2개씩)
+        slideStep: 25, // 25%씩 이동 (1개 아이템씩)
         isSliderActive: true 
       };
     } else {
-      // 모바일: 1개씩 보임
+      // 모바일 (840px 이하): 1개씩 보임, 1개씩 이동
       return { 
         itemsPerView: 1, 
-        slideStep: 100, // 100%씩 이동 (1개씩)
+        slideStep: 25, // 25%씩 이동 (1개 아이템씩)
         isSliderActive: true 
       };
     }
@@ -757,14 +761,14 @@ function initializePortfolioSlider() {
     portfolioContainer.style.transform = `translateX(${translateX}%)`;
     
     // 버튼 상태 업데이트
-    const maxSlides = Math.ceil(totalSlides / slideInfo.itemsPerView);
+    const maxSlides = getMaxSlides(slideInfo);
     if (portfolioPrevBtn) portfolioPrevBtn.disabled = currentPortfolioSlide === 0;
     if (portfolioNextBtn) portfolioNextBtn.disabled = currentPortfolioSlide >= maxSlides - 1;
     
     // Dot 활성 상태 업데이트
     updatePortfolioDots();
     
-    console.log(`Portfolio - Current slide: ${currentPortfolioSlide}, TranslateX: ${translateX}%, ItemsPerView: ${slideInfo.itemsPerView}`);
+    console.log(`Portfolio - Current slide: ${currentPortfolioSlide}, TranslateX: ${translateX}%, ItemsPerView: ${slideInfo.itemsPerView}, MaxSlides: ${maxSlides}`);
   }
 
   function updatePortfolioDots() {
@@ -779,27 +783,39 @@ function initializePortfolioSlider() {
 
   function goToSlide(slideIndex) {
     const slideInfo = getSlideInfo();
-    const maxSlides = Math.ceil(totalSlides / slideInfo.itemsPerView);
+    const maxSlides = getMaxSlides(slideInfo);
     if (slideIndex >= 0 && slideIndex < maxSlides) {
       currentPortfolioSlide = slideIndex;
       updatePortfolioSlider();
     }
   }
 
+  function getMaxSlides(slideInfo) {
+    // 모든 브레이크포인트에서 1개씩 이동하므로 통일된 계산 방식 사용
+    // 총 슬라이드 수 = 전체 아이템 수 - 한 번에 보이는 아이템 수 + 1
+    return totalSlides - slideInfo.itemsPerView + 1;
+  }
+
   function nextPortfolioSlide() {
     const slideInfo = getSlideInfo();
-    const maxSlides = Math.ceil(totalSlides / slideInfo.itemsPerView);
+    const maxSlides = getMaxSlides(slideInfo);
     if (currentPortfolioSlide < maxSlides - 1) {
       currentPortfolioSlide++;
-      updatePortfolioSlider();
+    } else {
+      currentPortfolioSlide = 0; // 마지막 슬라이드에서 첫 번째로 돌아가기
     }
+    updatePortfolioSlider();
   }
 
   function prevPortfolioSlide() {
+    const slideInfo = getSlideInfo();
+    const maxSlides = getMaxSlides(slideInfo);
     if (currentPortfolioSlide > 0) {
       currentPortfolioSlide--;
-      updatePortfolioSlider();
+    } else {
+      currentPortfolioSlide = maxSlides - 1; // 첫 번째 슬라이드에서 마지막으로 이동
     }
+    updatePortfolioSlider();
   }
 
   // 터치 스와이프 변수
@@ -850,16 +866,26 @@ function initializePortfolioSlider() {
         // 왼쪽 스와이프 -> 다음 슬라이드
         nextPortfolioSlide();
       }
+      restartPortfolioAutoSlide(); // 터치 조작 후 자동 슬라이드 재시작
     }
   }
 
   // 이벤트 리스너
-  if (portfolioNextBtn) portfolioNextBtn.addEventListener('click', nextPortfolioSlide);
-  if (portfolioPrevBtn) portfolioPrevBtn.addEventListener('click', prevPortfolioSlide);
+  if (portfolioNextBtn) portfolioNextBtn.addEventListener('click', () => {
+    nextPortfolioSlide();
+    restartPortfolioAutoSlide(); // 수동 조작 후 자동 슬라이드 재시작
+  });
+  if (portfolioPrevBtn) portfolioPrevBtn.addEventListener('click', () => {
+    prevPortfolioSlide();
+    restartPortfolioAutoSlide(); // 수동 조작 후 자동 슬라이드 재시작
+  });
   
   // Dot 클릭 이벤트
   portfolioDots.forEach((dot, index) => {
-    dot.addEventListener('click', () => goToSlide(index));
+    dot.addEventListener('click', () => {
+      goToSlide(index);
+      restartPortfolioAutoSlide(); // 수동 조작 후 자동 슬라이드 재시작
+    });
   });
 
   // 터치 이벤트 리스너 추가
@@ -867,15 +893,48 @@ function initializePortfolioSlider() {
   portfolioContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
   portfolioContainer.addEventListener('touchend', handleTouchEnd, { passive: false });
 
+  // 자동 슬라이드 변수
+  let portfolioAutoSlideInterval;
+
+  // 자동 슬라이드 시작
+  function startPortfolioAutoSlide() {
+    if (portfolioAutoSlideInterval) clearInterval(portfolioAutoSlideInterval);
+    portfolioAutoSlideInterval = setInterval(nextPortfolioSlide, 4000); // 4초마다 자동 슬라이드
+  }
+
+  // 자동 슬라이드 정지
+  function stopPortfolioAutoSlide() {
+    if (portfolioAutoSlideInterval) {
+      clearInterval(portfolioAutoSlideInterval);
+      portfolioAutoSlideInterval = null;
+    }
+  }
+
+  // 자동 슬라이드 재시작
+  function restartPortfolioAutoSlide() {
+    stopPortfolioAutoSlide();
+    setTimeout(startPortfolioAutoSlide, 1000); // 1초 후 자동 슬라이드 재시작
+  }
+
+  // 마우스 호버 시 자동 슬라이드 일시 정지
+  const portfolioSliderElement = document.querySelector('.portfolio-slider');
+  if (portfolioSliderElement) {
+    portfolioSliderElement.addEventListener('mouseenter', stopPortfolioAutoSlide);
+    portfolioSliderElement.addEventListener('mouseleave', startPortfolioAutoSlide);
+  }
+
   // 리사이즈 이벤트 리스너
   window.addEventListener('resize', () => {
+    stopPortfolioAutoSlide(); // 기존 자동 슬라이드 정지
     currentPortfolioSlide = 0; // 화면 크기 변경 시 첫 슬라이드로 리셋
     updatePortfolioSlider();
+    startPortfolioAutoSlide(); // 새로운 설정으로 자동 슬라이드 시작
   });
 
   // 초기 설정
   updatePortfolioSlider();
-  console.log(`Portfolio slider initialized with ${totalSlides} items`);
+  startPortfolioAutoSlide(); // 자동 슬라이드 시작
+  console.log(`Portfolio slider initialized with ${totalSlides} items - Auto slide every 4 seconds`);
 }
 
 // Back to Top 버튼 기능
